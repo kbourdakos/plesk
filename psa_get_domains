@@ -1,0 +1,9 @@
+
+#Είσοδος
+plesk db
+
+#Χρήση Βάσης
+use psa;
+
+#Select Command
+select from domains;
