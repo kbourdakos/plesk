@@ -6,4 +6,4 @@ plesk db
 use psa;
 
 #Select Command
-select from domains;
+select * from domains;
