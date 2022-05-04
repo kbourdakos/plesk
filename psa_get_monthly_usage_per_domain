@@ -1,0 +1,10 @@
+
+// Το έχω κάνει να βγάζει ΜΒ ως αποτέλεσμα.
+
+MariaDB [psa]> select id, name, monthlyTraffic/1000000 as 'Monthly MB' from domains;
++----+---------------+------------+
+| id | name          | Monthly MB |
++----+---------------+------------+
+|  1 | kbourdakos.gr |    11.5867 |
+|  2 | lnl.one       |     0.1191 |
++----+---------------+------------+
