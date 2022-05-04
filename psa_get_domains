@@ -11,5 +11,4 @@ select * from domains;
 
 
 # Μπορούμε επίσης να δούμε τα Columns του Table: DOMAINS
-
 show columns from domains;
