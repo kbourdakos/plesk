@@ -1,4 +1,4 @@
-// Επιστρέφει και το vhost path του subscription.
+// Επιστρέφει και το vhost path του subscription. Το id είναι το id του domain.
 
 use psa;
 select * from sys_users;
