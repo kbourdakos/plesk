@@ -15,7 +15,7 @@ select * from sys_users;
 +----+---------------+-------------------------+------------+------------------------------+------------+-------+-----------+
 
 
-Πιο καλός τρόπος (;;;;;).
+Πιο καλός τρόπος (;;;;;) - Σκατούλες. Δεν λειτουργεί πάντα.
 
 select * from sys_users where login like (select login from clients where (id = (select cl_id from domains where name like 'testdb.kbourdakos.gr')));
 
