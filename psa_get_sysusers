@@ -13,3 +13,10 @@ select * from sys_users;
 |  4 |             1 | bourdakos.gr_g1vkzxcgh7 |          9 | /var/www/vhosts/bourdakos.gr | /bin/false |     0 |      NULL |
 |  5 |             1 | pivies.com_grpxptjc27h  |         12 | /var/www/vhosts/pivies.com   | /bin/false |     0 |      NULL |
 +----+---------------+-------------------------+------------+------------------------------+------------+-------+-----------+
+
+
+Πιο καλός τρόπος (;;;;;).
+
+select * from sys_users where login like (select login from clients where (id = (select cl_id from domains where name like 'testdb.kbourdakos.gr')));
+
+// To 1o select ψάχνει στα domains, το δεύτερο στο clients και όλο μαζί στο sys_users;
