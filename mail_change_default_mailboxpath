@@ -1,0 +1,32 @@
+
+
+Διαδικασία αλλαγής Default Mailbox Path.
+
+Το DEFAULT Path των inboxes είναι το /var/qmail/mailnames
+Στο παρόν παράδειγμα θα υποθέσουμε πως το νέο PATH θα είναι το εξής. /mnt01/data/mailnames
+
+
+-------------------------------------------------------------------
+Τα Βήματα Αναλυτικα. ( Ό,τι δεν έχει αριθμό το δίνουμε ως COMMAND )
+-------------------------------------------------------------------
+
+
+1. # Αρχικά "κόβουμε" το service
+
+service postfix stop
+
+2. # Ανοίγουμε σε editor το αρχείο /etc/psa/psa.conf
+
+vi /etc/psa/psa.conf
+
+3. # Ορίζουμε στην μεταβλητή PLESK_MAILNAMES_D την τιμή του νέου PATH ( ΣΤΟ ΣΥΓΚΕΚΡΙΜΈΝΟ ΠΑΡΑΔΕΙΓΜΑ = /mnt01/data/mailnames )
+
+PLESK_MAILNAMES_D /mnt01/data/mailnames
+
+4. # Αποθηκεύουμε, Κλείνουμε, Επαληθεύουμε.
+
+grep PLESK_MAILNAMES_D /etc/psa/psa.conf
+
+5. # Αντιγράφουμε τα mailboxes στο νέο PATH
+
+cp -ap /var/qmail/mailnames /mnt01/data/
