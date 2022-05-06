@@ -30,3 +30,52 @@ grep PLESK_MAILNAMES_D /etc/psa/psa.conf
 5. # Αντιγράφουμε τα mailboxes στο νέο PATH
 
 cp -ap /var/qmail/mailnames /mnt01/data/
+
+6. # O DOVECOT χρειάζεται νέο Configuration File.
+
+touch /etc/dovecot/conf.d/99-custom_dir.conf
+
+7. # Μέσα σε αυτό το άδεια αρχείο (99-custom_dir.conf) περνάμε ατόφιο το παρακάτω. Τίποτα άλλο.
+
+mail_home = /mnt01/data/mailnames/%Ld/%Ln
+mail_location = maildir:/mnt01/data/mailnames/%Ld/%Ln/Maildir:UTF-8
+
+8. # Restart των DOVECOT services.
+
+service dovecot restart
+service pc-remote restart
+
+9. # Restart των IMAP-COURIER (Σε μηχανάκια που δεν υπάρχει το συγκεκριμένο SERVICE - Θα λάβουμε UNIT NOT FOUND - Δεν μας επηρεάζει πάμε παρακάτω)
+
+service courier-authdaemon restart
+service courier-imapd restart
+service courier-imaps restart
+service courier-pop3d restart
+service courier-pop3s restart
+
+10. # Εκ νέου έναρξη του POSTFIX & Repair.
+
+service postfix start
+plesk repair mail -y
+
+11. # Ανοίγουμε σε editor το αρχείο /etc/passwd
+
+vi /etc/passwd
+
+12. # Βρίσκουμε το line που αφορά στον Χρήστη POPUSER και αλλάζουμε το Home Directory
+    # By default αυτό είναι το popuser:x:30:31:POP3 service user:/var/qmail/popuser:/sbin/nologin
+    # Θα πρέπει να αλλάξει σε popuser:x:30:31:POP3 service user:/mnt01/data/mailnames/popuser:/bin/false
+  
+13. # Αν στο OS έχουμε ενεργό SELINUX τότε
+
+chcon -R -t mail_spool_t /mnt01/data/mailnames
+
+
+ΤΕΛΟΣ.
+
+--
+
+Τι θα πρέπει να προσέξουμε.
+
+1. Στο παράδειγμα χρησιμοποιώ το PATH /mnt01/data > To αλλάζουμε αναλογώς το CASE
+2. Μεγάλη Προσοχή στο βήμα '7' μην ξεχάσουμε το :UTF-8 > Δεν θα παίξει τίποτα μετά.
