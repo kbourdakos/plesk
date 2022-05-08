@@ -1,0 +1,23 @@
+# Wordpress plugin - SMUSH PRO
+
+Αφού βάλαμε το παρακάτω additionan directive στον nginx το check του plugin συνέχιζε να μην διαβάζει τις αλλαγές.
+
+# BEGIN SMUSH-WEBP
+location ~* "wp-content\/(uploads\/)(.*\.(?:png|jpe?g))" {
+	add_header Vary Accept;
+	set $image_path $2;
+	if (-f "/var/www/vhosts/vraxioli.com/httpdocs/wp-content/smush-webp/disable_smush_webp") {
+		break;
+	}
+	if ($http_accept !~* "webp") {
+		break;
+	}
+	expires	max;
+	try_files /wp-content/smush-webp/$image_path.webp $uri =404;
+}
+# END SMUSH-WEBP
+
+Για να δουλέψει βρήκα πως από το "Serve static files directly by nginx" πρέπει να αφαιρεθούν τα extensions που υπάρχουν στο παραπάνω code block. Δηλαδη τα
+png, jpg, jpeg & WEBP.
+
+H δυνατότητα WEBP παρέχεται μέσω GD Library και είναι ενεργοποιημένη , στο PLESK , by default with PHP 7.2 and higher starting from Obsidian 18.0.27.
